@@ -8,7 +8,8 @@ export default function ProductsList() {
 
   useEffect(() => {
     // Appel API pour récupérer les produits
-    fetch('http://localhost:5000/api/products')
+    fetch(`${import.meta.env.VITE_API_URL}/api/products`)
+
       .then((response) => response.json())
       .then((data) => {
         console.log("Produits récupérés :", data); // ← Pour vérifier les données

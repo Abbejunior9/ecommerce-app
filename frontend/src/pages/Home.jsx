@@ -10,39 +10,16 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const dummyProducts = [
-      {
-        id: 1,
-        name: 'Montre Élégante',
-        description: 'Une montre élégante pour toutes occasions avec bracelet en cuir véritable.',
-        price: 129.99,
-        image: '/images/montres.jpg'
-      },
-      {
-        id: 2,
-        name: 'Sac à Main Designer',
-        description: 'Sac à main tendance avec compartiments multiples et finition premium.',
-        price: 89.99,
-        image: '/images/sac.jpg'
-      },
-      {
-        id: 3,
-        name: 'Baskets Sportives',
-        description: 'Baskets confortables pour le sport et le quotidien avec semelle amortissante.',
-        price: 64.99,
-        image: '/images/basket.jpg'
-      },
-      {
-        id: 4,
-        name: 'Lunettes de Soleil',
-        description: 'Protection UV complète avec design moderne et élégant.',
-        price: 49.99,
-        image: '/images/lunette.jpg'
-      }
-    ];
-
-    setProducts(dummyProducts);
-    setLoading(false);
+    fetch(`${import.meta.env.VITE_API_URL}/api/products`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data.slice(0, 4)); // ← Tu peux garder 4 produits pour "populaires"
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la récupération des produits :', error);
+        setLoading(false);
+      });
   }, []);
 
   return (

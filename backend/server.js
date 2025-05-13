@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const productsRoutes = require('./routes/productRoutes');
 require('dotenv').config();
+const path = require('path');  // Ajout du module 'path'
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // ✅ Toutes les routes /api/products sont dans productRoutes.js
+app.use('/images', express.static(path.join(__dirname, 'images'))); // Sert le dossier 'images'
 app.use('/api/products', productsRoutes);
 
 app.get('/', (req, res) => {
