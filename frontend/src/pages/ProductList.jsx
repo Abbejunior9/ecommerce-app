@@ -7,16 +7,29 @@ export default function ProductsList() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    // Appel API pour récupérer les produits
-    fetch(`${import.meta.env.VITE_API_URL}/api/products`)
-
-      .then((response) => response.json())
+    const apiUrl = `${import.meta.env.VITE_API_URL}/api/products`;
+  
+    console.log("API URL utilisée :", apiUrl);
+  
+    fetch(apiUrl)
+      .then((response) => {
+        if (!response.ok) {
+          // Si la réponse n'est pas valide, on lance une erreur
+          throw new Error('Erreur lors de la récupération des produits');
+        }
+        return response.json(); // On parse la réponse JSON
+      })
       .then((data) => {
-        console.log("Produits récupérés :", data); // ← Pour vérifier les données
+        console.log("Produits récupérés :", data);
         setProducts(data);
       })
-      .catch((error) => console.error('Erreur API:', error));
+      .catch((error) => {
+        console.error('Erreur API:', error);
+        // Tu peux aussi afficher un message d'erreur dans l'UI
+        setProducts([]); // On peut par exemple vider les produits en cas d'erreur
+      });
   }, []);
+  
 
   return (
     <div className="min-h-screen flex flex-col">

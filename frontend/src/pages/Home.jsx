@@ -48,9 +48,31 @@ export default function Home() {
             <div className="text-center py-12">Chargement des produits...</div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {products.map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
+             {products.map((product) => (
+  <div
+    key={product._id} // Ajoute la key ici
+    className="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105"
+  >
+    <Link to={`/product/${product._id}`} className="block">
+      <img
+        src={product.image || '/images/basket.jpg'} // Image par défaut si absente
+        alt={product.name}
+        className="w-full h-64 object-cover"
+      />
+      <div className="p-6">
+        <h2 className="text-xl font-semibold text-gray-900">{product.name}</h2>
+        <p className="text-sm text-gray-600 mt-2">{product.description}</p>
+        <div className="mt-4 flex justify-between items-center">
+          <span className="text-xl font-bold text-blue-600">
+            {product.price?.toFixed(2)} €
+          </span>
+          <span className="text-sm text-gray-500">{product.stock} en stock</span>
+        </div>
+      </div>
+    </Link>
+  </div>
+))}
+
             </div>
           )}
 
